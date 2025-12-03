@@ -15,20 +15,56 @@ body {
   overflow: hidden;
 }
 
-/* Left Panel - Marketing with CSS Gradient */
+/* Left Panel - Marketing with Animated Gradient */
 .auth-left {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
   position: relative;
+  overflow: hidden;
+
+  /* Animated Gradient Background */
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Tech Overlay on Left Panel */
+.auth-left::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
 }
 
 .auth-left-content {
   max-width: 500px;
   z-index: 2;
+  color: white;
+  /* Ensure text is readable on colorful bg */
 }
 
 .auth-left h1 {
@@ -36,51 +72,73 @@ body {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 20px;
-  color: #1a1a1a;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .auth-left p {
   font-size: 1.1rem;
-  color: #444;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 40px;
 }
 
-.auth-footer-links {
-  position: absolute;
-  bottom: 40px;
-  left: 60px;
-  display: flex;
-  gap: 20px;
-  font-size: 0.9rem;
-  color: #444;
-}
-
-.auth-footer-links span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 500;
-}
-
-/* Right Panel - Form */
+/* Right Panel - Form with Moving Tech Grid */
 .auth-right {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px;
-  background-color: #fff;
+  position: relative;
+
+  /* Moving Tech Grid Background */
+  background-color: #f8f9fd;
+  background-image: radial-gradient(#e1e1e1 1px, transparent 1px);
+  background-size: 30px 30px;
+  animation: moveGrid 60s linear infinite;
 }
 
+@keyframes moveGrid {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+/* Floating Card Animation */
 .auth-card {
   width: 100%;
   max-width: 450px;
   padding: 40px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  /* Floating Animation */
+  animation: float 6s ease-in-out infinite;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+  }
+
+  50% {
+    transform: translateY(-15px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+  }
+
+  100% {
+    transform: translateY(0px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+  }
 }
 
 .auth-card h2 {
@@ -88,12 +146,14 @@ body {
   font-weight: 600;
   margin-bottom: 10px;
   color: #1a1a1a;
+  text-align: center;
 }
 
 .auth-subtitle {
   color: #888;
   margin-bottom: 30px;
   font-size: 0.95rem;
+  text-align: center;
 }
 
 .input-group {
@@ -191,59 +251,6 @@ body {
   cursor: not-allowed;
 }
 
-.divider {
-  text-align: center;
-  margin: 20px 0;
-  position: relative;
-  color: #888;
-  font-size: 0.85rem;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 40%;
-  height: 1px;
-  background: #eee;
-}
-
-.divider::before {
-  left: 0;
-}
-
-.divider::after {
-  right: 0;
-}
-
-.social-login {
-  display: flex;
-  gap: 15px;
-}
-
-.social-btn {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #e1e1e1;
-  border-radius: 12px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #333;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.social-btn:hover {
-  background: #f8f9fa;
-  border-color: #d1d1d1;
-}
-
 .auth-footer {
   text-align: center;
   margin-top: 25px;
@@ -265,15 +272,11 @@ body {
   .auth-left {
     padding: 40px 20px;
     flex: 0 0 auto;
+    min-height: 200px;
   }
 
   .auth-left h1 {
     font-size: 2rem;
-  }
-
-  .auth-footer-links {
-    position: static;
-    margin-top: 20px;
   }
 
   .auth-right {
@@ -284,5 +287,7 @@ body {
     box-shadow: none;
     padding: 20px;
     border: none;
+    animation: none;
+    /* Disable float on mobile to prevent jitter */
   }
 }
